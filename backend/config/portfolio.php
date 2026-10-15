@@ -8,7 +8,7 @@
 return [
 
     // Public site; the API host redirects its bare domain here.
-    'frontend_url' => env('FRONTEND_URL', 'https://fayerahammed.com'),
+    'frontend_url' => env('FRONTEND_URL', 'https://example.com'),
 
     // Account created by the AdminUserSeeder (php artisan db:seed).
     'admin_email' => env('ADMIN_EMAIL'),

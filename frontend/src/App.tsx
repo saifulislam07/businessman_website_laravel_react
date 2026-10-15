@@ -41,7 +41,7 @@ export default function App() {
   if (isError) return <ErrorState onRetry={() => void refetch()} retrying={isFetching} />
 
   const s = data.settings
-  const name = s.name ?? 'Fayer Ahammed'
+  const name = s.name ?? 'Your Name'
 
   const sections: SectionDef[] = [
     {

@@ -27,7 +27,7 @@ interface ContactProps {
 }
 
 export function Contact({ settings, tone, title, subtitle }: ContactProps) {
-  const name = settings.name ?? 'Fayer Ahammed'
+  const name = settings.name ?? 'Your Name'
   const whatsapp = whatsappUrl(settings.whatsapp, name)
 
   return (

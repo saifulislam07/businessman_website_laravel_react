@@ -20,7 +20,7 @@ class ContentSeeder extends Seeder
     public function run(): void
     {
         $about = About::create([
-            'bio' => '<p>Fayer Ahammed is an entrepreneur and businessman based between Brunei and Malaysia. Over more than a decade he has built and led companies in trading, technology and property.</p><p>His approach is simple: <strong>long-term partnerships, disciplined operations</strong> and a quiet focus on quality.</p>',
+            'bio' => '<p>Your Name is an entrepreneur and businessman based between Brunei and Malaysia. Over more than a decade he has built and led companies in trading, technology and property.</p><p>His approach is simple: <strong>long-term partnerships, disciplined operations</strong> and a quiet focus on quality.</p>',
             'vision' => 'To build businesses that create lasting value for partners, teams and communities across Southeast Asia.',
         ]);
         $this->attach($about, 'About Photo', 1000, 1200);
@@ -87,7 +87,7 @@ class ContentSeeder extends Seeder
         }
 
         $testimonials = [
-            ['Ahmad Rahman', 'Managing Director', 'Rahman Group', 'Fayer is a rare partner: calm, precise and always true to his word.'],
+            ['Ahmad Rahman', 'Managing Director', 'Rahman Group', 'He is a rare partner: calm, precise and always true to his word.'],
             ['Siti Nurhaliza', 'Head of Operations', 'Coastal Logistics', 'Working with his team transformed how we handle regional supply.'],
             ['David Tan', 'CEO', 'Tan Capital', 'A thoughtful investor with a genuine long-term view.'],
         ];

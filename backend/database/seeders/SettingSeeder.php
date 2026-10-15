@@ -11,21 +11,21 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            'name' => 'Fayer Ahammed',
+            'name' => 'Your Name',
             'hero_image' => null,
             'og_image' => null,
             'tagline' => 'Entrepreneur building enduring businesses across Brunei and Malaysia.',
-            'email' => 'hello@fayerahammed.com',
+            'email' => 'hello@example.com',
             'phone' => '+673 222 0000',
             'whatsapp' => '+6738880000',
             'brunei_address' => 'Unit 12, Bangunan Contoh, Jalan Gadong, Bandar Seri Begawan BE1318, Brunei Darussalam',
             'malaysia_address' => 'Level 18, Menara Contoh, Jalan Sultan Ismail, 50250 Kuala Lumpur, Malaysia',
             'map_embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8!2d114.93!3d4.89',
-            'linkedin' => 'https://www.linkedin.com/in/fayerahammed',
-            'facebook' => 'https://www.facebook.com/fayerahammed',
-            'instagram' => 'https://www.instagram.com/fayerahammed',
-            'seo_title' => 'Fayer Ahammed — Entrepreneur in Brunei & Malaysia',
-            'seo_description' => 'Official website of Fayer Ahammed, entrepreneur and businessman with ventures across Brunei and Malaysia.',
+            'linkedin' => 'https://www.linkedin.com/in/yourname',
+            'facebook' => 'https://www.facebook.com/yourname',
+            'instagram' => 'https://www.instagram.com/yourname',
+            'seo_title' => 'Your Name — Entrepreneur in Brunei & Malaysia',
+            'seo_description' => 'Official website of Your Name, entrepreneur and businessman with ventures across Brunei and Malaysia.',
         ];
 
         $order = 0;

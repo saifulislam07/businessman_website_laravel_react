@@ -3,7 +3,7 @@ import { ResponsiveImage } from '../ResponsiveImage'
 import { Button, Container } from '../ui'
 
 export function Hero({ settings, showVentures }: { settings: Settings; showVentures: boolean }) {
-  const name = settings.name ?? 'Fayer Ahammed'
+  const name = settings.name ?? 'Your Name'
 
   return (
     <section id="top" data-surface="dark" className="flex bg-navy pb-16 pt-28 text-white md:pb-24 lg:min-h-screen lg:items-center lg:pt-24">

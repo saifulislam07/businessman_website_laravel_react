@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Fayer Ahammed — Admin')
+            ->brandName('Your Name — Admin')
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.svg'))

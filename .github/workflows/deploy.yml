@@ -125,7 +125,7 @@ jobs:
 
       # Backend first, so the API already serves any new fields when visitors get the new site.
       - name: Deploy backend
-        run: ssh deploy-target 'bash /var/www/fayerahammed/deploy/deploy-backend.sh'
+        run: ssh deploy-target 'bash /var/www/portfolio/deploy/deploy-backend.sh'
 
       - name: Upload frontend
         run: |

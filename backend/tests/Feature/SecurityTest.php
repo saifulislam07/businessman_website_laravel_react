@@ -1,9 +1,9 @@
 <?php
 
 it('redirects the bare API domain to the public site', function () {
-    config(['portfolio.frontend_url' => 'https://fayerahammed.com']);
+    config(['portfolio.frontend_url' => 'https://example.com']);
 
-    $this->get('/')->assertRedirect('https://fayerahammed.com');
+    $this->get('/')->assertRedirect('https://example.com');
 });
 
 it('asks search engines not to index the API host', function () {

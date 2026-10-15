@@ -1,4 +1,4 @@
-# Fayer Ahammed — Frontend (React + Vite + TypeScript)
+# Portfolio — Frontend (React + Vite + TypeScript)
 
 Single-page portfolio site. Styling with Tailwind CSS 4; data from the Laravel API.
 
@@ -21,7 +21,7 @@ site in headless Chrome and writes the full HTML (with the data embedded as a JS
 
 - The **backend must be reachable** during the build; otherwise the build fails on purpose.
 - Needs Chrome/Chromium: auto-detected, or set `CHROME_PATH`.
-- Set `VITE_SITE_URL` (e.g. `https://fayerahammed.com`) for canonical, Open Graph and sitemap URLs.
+- Set `VITE_SITE_URL` (e.g. `https://example.com`) for canonical, Open Graph and sitemap URLs.
 - Content changes in the admin appear after the next page load (the app refetches), but the
   prerendered HTML only updates on a new build. Rebuild after major content or SEO changes.
 - If you add or remove a `React.lazy` boundary, update the `suspended` selectors in the prerender script.

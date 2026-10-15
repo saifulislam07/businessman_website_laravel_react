@@ -9,7 +9,7 @@ import { findChrome } from './chrome.mjs'
 
 const env = { ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env }
 const API_URL = (env.VITE_API_URL ?? '').replace(/\/$/, '')
-const SITE_URL = (env.VITE_SITE_URL ?? 'https://fayerahammed.com').replace(/\/$/, '')
+const SITE_URL = (env.VITE_SITE_URL ?? 'https://example.com').replace(/\/$/, '')
 const DIST = resolve(env.PRERENDER_DIST ?? 'dist')
 const PORT = 4173
 

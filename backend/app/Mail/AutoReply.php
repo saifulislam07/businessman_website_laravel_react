@@ -18,7 +18,7 @@ class AutoReply extends Mailable implements ShouldQueue
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Thank you for contacting Fayer Ahammed');
+        return new Envelope(subject: 'Thank you for contacting Your Name');
     }
 
     public function content(): Content

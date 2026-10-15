@@ -12,7 +12,7 @@ interface FooterProps {
 }
 
 export function Footer({ settings, links }: FooterProps) {
-  const name = settings.name ?? 'Fayer Ahammed'
+  const name = settings.name ?? 'Your Name'
   const socials: Array<{ label: string; href?: string; icon: ReactNode }> = [
     { label: 'LinkedIn', href: settings.linkedin, icon: <LinkedinIcon /> },
     { label: 'Facebook', href: settings.facebook, icon: <FacebookIcon /> },

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Backend deploy: run on the server (CI runs it over SSH as the "deploy" user).
 #
-#   bash /var/www/fayerahammed/deploy/deploy-backend.sh
+#   bash /var/www/portfolio/deploy/deploy-backend.sh
 #
 # Environment overrides: APP_DIR (repo root), BRANCH, PHP_FPM_SERVICE.
 
@@ -11,14 +11,14 @@ main() {
   set -euo pipefail
   umask 002 # files stay group-writable so www-data (PHP-FPM, queue worker) can use them
 
-  local APP_DIR="${APP_DIR:-/var/www/fayerahammed}"
+  local APP_DIR="${APP_DIR:-/var/www/portfolio}"
   local BRANCH="${BRANCH:-main}"
   local PHP_FPM_SERVICE="${PHP_FPM_SERVICE:-php8.3-fpm}"
 
   step() { printf '\n==> %s\n' "$*"; }
 
   # One deploy at a time.
-  exec 9>/tmp/fayer-deploy.lock
+  exec 9>/tmp/portfolio-deploy.lock
   flock -n 9 || { echo "Another deploy is already running." >&2; exit 1; }
 
   step "Pulling ${BRANCH}"

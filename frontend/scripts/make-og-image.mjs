@@ -22,7 +22,7 @@ h1{margin:28px 0 0;color:#fff;font:700 112px/1.05 'Playfair',serif}
 .rule{width:96px;height:3px;background:#C9A24B;margin:36px 0}
 p{margin:0;color:rgba(255,255,255,.82);font-size:34px;font-weight:400}
 </style></head><body><div class="frame"></div><div class="wrap">
-<div class="label">Brunei · Malaysia</div><h1>Fayer Ahammed</h1><div class="rule"></div><p>Entrepreneur &amp; businessman</p>
+<div class="label">Brunei · Malaysia</div><h1>Your Name</h1><div class="rule"></div><p>Entrepreneur &amp; businessman</p>
 </div></body></html>`
 
 const browser = await puppeteer.launch({ executablePath: findChrome(), headless: true, args: ['--allow-file-access-from-files'] })

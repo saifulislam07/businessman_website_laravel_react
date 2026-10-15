@@ -67,7 +67,7 @@ it('saves site settings and the hero image', function () {
     config(['media-library.disk_name' => 'public']);
 
     livewire(SiteSettings::class)
-        ->fillForm(['name' => 'Fayer Ahammed', 'tagline' => 'New tagline', 'seo_title' => 'SEO'])
+        ->fillForm(['name' => 'Your Name', 'tagline' => 'New tagline', 'seo_title' => 'SEO'])
         ->set('data.hero_image', [UploadedFile::fake()->image('hero.jpg', 800, 600)])
         ->call('save')
         ->assertHasNoFormErrors();

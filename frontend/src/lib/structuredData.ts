@@ -11,7 +11,7 @@ const ventureId = (v: Venture) => `${SITE_URL}/#venture-${v.slug}`
 /** schema.org graph: one Person who works for each venture, plus an Organization per venture. */
 export function buildStructuredData(data: HomeData) {
   const { settings, ventures } = data
-  const name = settings.name ?? 'Fayer Ahammed'
+  const name = settings.name ?? 'Your Name'
 
   const sameAs = [settings.linkedin, settings.facebook, settings.instagram].filter(Boolean)
 

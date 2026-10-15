@@ -4,8 +4,8 @@
 `#` দিয়ে শুরু হওয়া লাইন মন্তব্য, চালাতে হবে না।
 
 **স্থাপত্য:** ব্রাউজার → Cloudflare → Nginx (এই সার্ভার)।
-- `fayerahammed.com` → `/var/www/frontend/dist` (স্ট্যাটিক React)
-- `api.fayerahammed.com` → `/var/www/backend/public` (Laravel API + `/admin`)
+- `example.com` → `/var/www/frontend/dist` (স্ট্যাটিক React)
+- `api.example.com` → `/var/www/backend/public` (Laravel API + `/admin`)
 
 **কোন কনফিগ কোথায় আছে:** সবই এই রিপোর `deploy/` ফোল্ডারে (`nginx/`, `supervisor/`, `cron/`, `deploy-backend.sh`, `scripts/`, `*.env.production.example`)।
 
@@ -18,9 +18,9 @@
 
 1. **DNS:** তিনটা `A` রেকর্ড, সবই *Proxied* (কমলা মেঘ): `@`, `www`, `api` → সার্ভারের IP।
 2. **SSL/TLS → Overview:** মোড **Full (strict)**।
-3. **SSL/TLS → Origin Server → Create Certificate:** hostname `fayerahammed.com` ও `*.fayerahammed.com`, মেয়াদ ১৫ বছর। **Certificate (PEM)** আর **Private key** দুটোই কপি করে রাখুন (ধাপ ৮-এ লাগবে)। Private key পরে আর দেখা যায় না।
+3. **SSL/TLS → Origin Server → Create Certificate:** hostname `example.com` ও `*.example.com`, মেয়াদ ১৫ বছর। **Certificate (PEM)** আর **Private key** দুটোই কপি করে রাখুন (ধাপ ৮-এ লাগবে)। Private key পরে আর দেখা যায় না।
 4. **SSL/TLS → Edge Certificates:** *Always Use HTTPS* চালু, *Minimum TLS Version* 1.2।
-5. **Turnstile → Add widget:** domain `fayerahammed.com`, mode *Managed*। **Site key** (ফ্রন্টএন্ডের জন্য) ও **Secret key** (ব্যাকএন্ডের জন্য) রাখুন।
+5. **Turnstile → Add widget:** domain `example.com`, mode *Managed*। **Site key** (ফ্রন্টএন্ডের জন্য) ও **Secret key** (ব্যাকএন্ডের জন্য) রাখুন।
 
 ## ধাপ ২: প্রথম লগইন, আপডেট ও `deploy` ইউজার
 
@@ -97,7 +97,7 @@ sudo usermod -aG www-data deploy     # পরের লগইন থেকে �
 **PHP সেটিং** (আপলোড 5 MB, OPcache চালু):
 
 ```bash
-sudo tee /etc/php/8.3/fpm/conf.d/99-fayer.ini >/dev/null <<'EOF'
+sudo tee /etc/php/8.3/fpm/conf.d/99-portfolio.ini >/dev/null <<'EOF'
 expose_php = Off
 upload_max_filesize = 6M
 post_max_size = 8M
@@ -117,9 +117,9 @@ sudo systemctl restart php8.3-fpm
 sudo mysql_secure_installation   # root পাসওয়ার্ড/anonymous ইউজার/test DB — সব প্রশ্নে Y
 
 sudo mysql <<'SQL'
-CREATE DATABASE fayer_ahammed CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'fayer_app'@'localhost' IDENTIFIED BY 'STRONG_PASSWORD';
-GRANT ALL PRIVILEGES ON fayer_ahammed.* TO 'fayer_app'@'localhost';
+CREATE DATABASE portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'portfolio_app'@'localhost' IDENTIFIED BY 'STRONG_PASSWORD';
+GRANT ALL PRIVILEGES ON portfolio.* TO 'portfolio_app'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 ```
@@ -134,7 +134,7 @@ sudo chown -R deploy:www-data /var/www
 sudo chmod -R g+rwX /var/www
 
 # শুধু-পড়ার deploy key
-ssh-keygen -t ed25519 -C "fayer-server" -f ~/.ssh/github_deploy -N ""
+ssh-keygen -t ed25519 -C "portfolio-server" -f ~/.ssh/github_deploy -N ""
 cat ~/.ssh/github_deploy.pub
 ```
 
@@ -149,14 +149,14 @@ EOF
 chmod 600 ~/.ssh/config
 ssh -T git@github.com    # "Hi ...! You've successfully authenticated" দেখাবে
 
-git clone git@github.com:YOUR_GITHUB_USER/YOUR_REPO.git /var/www/fayerahammed
-ln -s /var/www/fayerahammed/backend /var/www/backend   # Nginx ও Supervisor এই পাথ ধরে
+git clone git@github.com:YOUR_GITHUB_USER/YOUR_REPO.git /var/www/portfolio
+ln -s /var/www/portfolio/backend /var/www/backend   # Nginx ও Supervisor এই পাথ ধরে
 ```
 
 ## ধাপ ৭: Laravel প্রথম ইনস্টল
 
 ```bash
-cd /var/www/fayerahammed/backend
+cd /var/www/portfolio/backend
 umask 002
 
 # স্টোরেজ ও ক্যাশ www-data-র লেখার যোগ্য করা
@@ -190,20 +190,20 @@ sudo chmod 440 /etc/sudoers.d/deploy-fpm && sudo visudo -cf /etc/sudoers.d/deplo
 ## ধাপ ৮: Nginx
 
 ```bash
-cd /var/www/fayerahammed/deploy/nginx
+cd /var/www/portfolio/deploy/nginx
 
-sudo cp conf.d/00-fayer.conf /etc/nginx/conf.d/
+sudo cp conf.d/00-portfolio.conf /etc/nginx/conf.d/
 sudo cp snippets/*.conf /etc/nginx/snippets/
 sudo cp sites-available/*.conf /etc/nginx/sites-available/
 
 # Cloudflare Origin সার্টিফিকেট (ধাপ ১ থেকে)
 sudo mkdir -p /etc/ssl/cloudflare
-sudo nano /etc/ssl/cloudflare/fayerahammed.com.pem   # Certificate (PEM) পেস্ট
-sudo nano /etc/ssl/cloudflare/fayerahammed.com.key   # Private key পেস্ট
-sudo chmod 600 /etc/ssl/cloudflare/fayerahammed.com.key
+sudo nano /etc/ssl/cloudflare/example.com.pem   # Certificate (PEM) পেস্ট
+sudo nano /etc/ssl/cloudflare/example.com.key   # Private key পেস্ট
+sudo chmod 600 /etc/ssl/cloudflare/example.com.key
 
-sudo ln -s /etc/nginx/sites-available/fayerahammed.com.conf /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/api.fayerahammed.com.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/example.com.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/api.example.com.conf /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 
 sudo nginx -t && sudo systemctl reload nginx
@@ -212,19 +212,19 @@ sudo nginx -t && sudo systemctl reload nginx
 কাজ করছে কি না (ফ্রন্টএন্ড এখনো আপলোড হয়নি, তাই শুধু API দেখুন):
 
 ```bash
-curl -sI https://api.fayerahammed.com/api/v1/home | head -12      # 200 + সিকিউরিটি হেডার
-curl -s  https://api.fayerahammed.com/api/v1/settings | head -c 300
+curl -sI https://api.example.com/api/v1/home | head -12      # 200 + সিকিউরিটি হেডার
+curl -s  https://api.example.com/api/v1/settings | head -c 300
 ```
 
 ## ধাপ ৯: Supervisor (queue worker) ও cron (scheduler)
 
 ```bash
-sudo cp /var/www/fayerahammed/deploy/supervisor/fayer-queue.conf /etc/supervisor/conf.d/
+sudo cp /var/www/portfolio/deploy/supervisor/portfolio-queue.conf /etc/supervisor/conf.d/
 sudo supervisorctl reread && sudo supervisorctl update
-sudo supervisorctl status          # fayer-queue:fayer-queue_00   RUNNING
+sudo supervisorctl status          # portfolio-queue:portfolio-queue_00   RUNNING
 
-sudo cp /var/www/fayerahammed/deploy/cron/fayer-scheduler /etc/cron.d/fayer-scheduler
-sudo chown root:root /etc/cron.d/fayer-scheduler && sudo chmod 644 /etc/cron.d/fayer-scheduler
+sudo cp /var/www/portfolio/deploy/cron/portfolio-scheduler /etc/cron.d/portfolio-scheduler
+sudo chown root:root /etc/cron.d/portfolio-scheduler && sudo chmod 644 /etc/cron.d/portfolio-scheduler
 ```
 
 ## ধাপ ১০: ব্যাকআপ যাচাই
@@ -239,20 +239,20 @@ sudo unzip -l storage/app/private/*/*.zip | head -20   # db-dumps/*.sql ও publ
 ```
 
 > ব্যাকআপ এই সার্ভারেই থাকে। **সার্ভার হারালে ব্যাকআপও যায়।** সপ্তাহে অন্তত একবার অন্য কোথাও কপি করুন, যেমন নিজের কম্পিউটারে:
-> `rsync -az deploy@YOUR_SERVER_IP:/var/www/backend/storage/app/private/ ~/fayer-backups/`
+> `rsync -az deploy@YOUR_SERVER_IP:/var/www/backend/storage/app/private/ ~/portfolio-backups/`
 > অথবা `config/filesystems.php`-এ S3/Backblaze ডিস্ক যোগ করে `config/backup.php`-এর `destination.disks`-এ বসান।
 
-**রিস্টোর:** `unzip` করে `mysql -u fayer_app -p fayer_ahammed < db-dumps/mysql-fayer_ahammed.sql`, আর `public/` ফোল্ডারের ফাইল `storage/app/public/`-এ কপি।
+**রিস্টোর:** `unzip` করে `mysql -u portfolio_app -p portfolio < db-dumps/mysql-portfolio.sql`, আর `public/` ফোল্ডারের ফাইল `storage/app/public/`-এ কপি।
 
 ## ধাপ ১১: ফায়ারওয়াল শুধু Cloudflare-এর জন্য (সাইট Cloudflare দিয়ে চলছে নিশ্চিত হওয়ার পর)
 
 এতে কেউ সরাসরি সার্ভারের IP-তে এসে Cloudflare এড়াতে পারবে না।
 
 ```bash
-sudo bash /var/www/fayerahammed/deploy/scripts/allow-cloudflare-firewall.sh
+sudo bash /var/www/portfolio/deploy/scripts/allow-cloudflare-firewall.sh
 
 # Cloudflare-এর IP তালিকা মাসে একবার হালনাগাদ (Nginx real-IP + ফায়ারওয়াল)
-echo '0 4 1 * * root /var/www/fayerahammed/deploy/scripts/update-cloudflare-ips.sh && /var/www/fayerahammed/deploy/scripts/allow-cloudflare-firewall.sh >/dev/null' \
+echo '0 4 1 * * root /var/www/portfolio/deploy/scripts/update-cloudflare-ips.sh && /var/www/portfolio/deploy/scripts/allow-cloudflare-firewall.sh >/dev/null' \
   | sudo tee /etc/cron.d/cloudflare-ips
 ```
 
@@ -275,8 +275,8 @@ ssh-keyscan -H YOUR_SERVER_IP                             # এই আউটপ�
 | `SSH_PORT` | (ঐচ্ছিক) ডিফল্ট `22` |
 | `SSH_PRIVATE_KEY` | `gh_deploy` ফাইলের পুরো লেখা (`-----BEGIN` থেকে `END-----` পর্যন্ত) |
 | `SSH_KNOWN_HOSTS` | `ssh-keyscan` আউটপুট |
-| `VITE_API_URL` | `https://api.fayerahammed.com/api/v1` |
-| `VITE_SITE_URL` | `https://fayerahammed.com` |
+| `VITE_API_URL` | `https://api.example.com/api/v1` |
+| `VITE_SITE_URL` | `https://example.com` |
 | `VITE_TURNSTILE_SITE_KEY` | Turnstile **site** key |
 
 Settings → Environments → **production** তৈরি করুন (চাইলে *Required reviewers* দিন, তাহলে প্রতিবার আপনার অনুমোদনের পর ডেপ্লয় হবে)।
@@ -284,7 +284,7 @@ Settings → Environments → **production** তৈরি করুন (চা�
 **গ) `main` ব্রাঞ্চে push করুন।** Actions ট্যাবে দেখবেন: ব্যাকএন্ড টেস্ট → ফ্রন্টএন্ড বিল্ড → ডেপ্লয় (ব্যাকএন্ড, তারপর ফ্রন্টএন্ড আপলোড, তারপর smoke test)।
 পুল রিকোয়েস্টে শুধু টেস্ট ও লিন্ট চলে, ডেপ্লয় হয় না।
 
-**ঘ) সাইট খুলে দেখুন:** `https://fayerahammed.com`, `https://api.fayerahammed.com/admin`
+**ঘ) সাইট খুলে দেখুন:** `https://example.com`, `https://api.example.com/admin`
 
 ## ধাপ ১৩: সেটআপ শেষের পরিষ্কার-পরিচ্ছন্নতা
 
@@ -299,26 +299,26 @@ sudo rm /etc/sudoers.d/90-deploy-setup      # সেটআপের সময়
 
 ```bash
 # হেডার (HSTS, CSP, nosniff, X-Frame-Options)
-curl -sI https://fayerahammed.com/ | grep -iE "strict-transport|content-security|x-frame|x-content|cache-control"
+curl -sI https://example.com/ | grep -iE "strict-transport|content-security|x-frame|x-content|cache-control"
 # হ্যাশ করা ফাইলের ক্যাশ (immutable, এক বছর)
-curl -sI https://fayerahammed.com/assets/$(ls /var/www/frontend/dist/assets | grep css | head -1) | grep -i cache-control
+curl -sI https://example.com/assets/$(ls /var/www/frontend/dist/assets | grep css | head -1) | grep -i cache-control
 # robots / sitemap
-curl -s https://fayerahammed.com/robots.txt; curl -s https://fayerahammed.com/sitemap.xml | head -5
+curl -s https://example.com/robots.txt; curl -s https://example.com/sitemap.xml | head -5
 # সত্যিকারের ভিজিটর IP লগে আসছে কি না (Cloudflare-এর IP নয়)
-sudo tail -3 /var/log/nginx/api.fayerahammed.com.access.log
+sudo tail -3 /var/log/nginx/api.example.com.access.log
 # queue ও scheduler
 sudo supervisorctl status; cd /var/www/backend && php artisan schedule:list
 ```
 
-সাইট থেকে একটা কন্ট্যাক্ট মেসেজ পাঠান → `ADMIN_NOTIFY_EMAIL`-এ মেইল ও প্রেরকের কাছে অটো-রিপ্লাই আসছে কি না দেখুন। না এলে: `sudo tail -50 /var/www/backend/storage/logs/laravel-*.log` ও `sudo tail /var/log/supervisor/fayer-queue.log`।
+সাইট থেকে একটা কন্ট্যাক্ট মেসেজ পাঠান → `ADMIN_NOTIFY_EMAIL`-এ মেইল ও প্রেরকের কাছে অটো-রিপ্লাই আসছে কি না দেখুন। না এলে: `sudo tail -50 /var/www/backend/storage/logs/laravel-*.log` ও `sudo tail /var/log/supervisor/portfolio-queue.log`।
 
 ## দৈনন্দিন কাজ
 
 | কাজ | কমান্ড |
 |---|---|
-| ডেপ্লয় | `main`-এ push (অথবা সার্ভারে `bash /var/www/fayerahammed/deploy/deploy-backend.sh`) |
-| আগের সংস্করণে ফেরা | `cd /var/www/fayerahammed && git reset --hard COMMIT_SHA && bash deploy/deploy-backend.sh` |
+| ডেপ্লয় | `main`-এ push (অথবা সার্ভারে `bash /var/www/portfolio/deploy/deploy-backend.sh`) |
+| আগের সংস্করণে ফেরা | `cd /var/www/portfolio && git reset --hard COMMIT_SHA && bash deploy/deploy-backend.sh` |
 | অ্যাডমিনে কনটেন্ট বদলের পর Google-এর জন্য HTML হালনাগাদ | GitHub → Actions → *CI and deploy* → **Run workflow** (ফ্রন্টএন্ড নতুন করে বিল্ড হবে) |
-| লগ | `/var/log/nginx/*.log`, `/var/www/backend/storage/logs/`, `/var/log/supervisor/fayer-queue.log` |
+| লগ | `/var/log/nginx/*.log`, `/var/www/backend/storage/logs/`, `/var/log/supervisor/portfolio-queue.log` |
 | ছবির সাইজ/কনভার্শন বদলালে (নতুন ছবিতে নিজে প্রযোজ্য, পুরনোগুলোর জন্য) | `cd /var/www/backend && sudo -u www-data php artisan media-library:regenerate --force` |
 | Nginx পরিবর্তনের পর | `sudo nginx -t && sudo systemctl reload nginx` |

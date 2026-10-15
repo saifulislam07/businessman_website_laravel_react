@@ -5,7 +5,7 @@ use App\Models\Venture;
 use Illuminate\Support\Facades\Cache;
 
 it('returns every section with only active, ordered items', function () {
-    Setting::create(['key' => 'name', 'value' => 'Fayer Ahammed']);
+    Setting::create(['key' => 'name', 'value' => 'Your Name']);
     Venture::create(['name' => 'Second', 'slug' => 'second', 'industry' => 'Tech', 'country' => 'MY', 'sort_order' => 2]);
     Venture::create(['name' => 'First', 'slug' => 'first', 'industry' => 'Trade', 'country' => 'BN', 'sort_order' => 1]);
     Venture::create(['name' => 'Hidden', 'slug' => 'hidden', 'industry' => 'Tech', 'country' => 'BN', 'is_active' => false]);
@@ -17,7 +17,7 @@ it('returns every section with only active, ordered items', function () {
         'milestones', 'gallery', 'partners', 'testimonials',
     ]]);
 
-    expect($response->json('data.settings.name'))->toBe('Fayer Ahammed')
+    expect($response->json('data.settings.name'))->toBe('Your Name')
         ->and(collect($response->json('data.ventures'))->pluck('name')->all())->toBe(['First', 'Second']);
 });
 

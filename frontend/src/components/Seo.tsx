@@ -20,7 +20,7 @@ export function Seo({ data }: { data: HomeData }) {
       <link rel="canonical" href={canonical} />
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={settings.name ?? 'Fayer Ahammed'} />
+      <meta property="og:site_name" content={settings.name ?? 'Your Name'} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
