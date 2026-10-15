@@ -1,0 +1,3 @@
+# The API and admin panel are not meant to be indexed; the public site lives on fayerahammed.com.
+User-agent: *
+Disallow: /

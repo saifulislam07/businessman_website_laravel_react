@@ -1,0 +1,158 @@
+@import 'tailwindcss';
+
+/* Self-hosted fonts (font-display: swap is the @fontsource default). */
+@import '@fontsource-variable/inter';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/600.css';
+@import '@fontsource/playfair-display/700.css';
+
+@theme {
+  --color-navy: #0f1e36;
+  --color-gold: #c9a24b;
+  --color-cream: #faf8f4;
+  --color-ink: #1f2937;
+  --color-muted: #6b7280;
+  /* Darker gold for text on light backgrounds (meets WCAG AA). */
+  --color-gold-dark: #8a6a1f;
+
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  --radius-card: 12px;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@theme inline {
+  --animate-fade: fade 0.4s ease-out;
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@layer components {
+  /* Typography for formatted text written in the admin's rich-text editor. */
+  .rich > * + * {
+    margin-top: 1rem;
+  }
+
+  .rich p {
+    overflow-wrap: anywhere;
+  }
+
+  .rich strong,
+  .rich b {
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .rich a {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .rich a:hover {
+    color: var(--color-gold-dark);
+  }
+
+  .rich ul,
+  .rich ol {
+    padding-left: 1.25rem;
+  }
+
+  .rich ul {
+    list-style: disc;
+  }
+
+  .rich ol {
+    list-style: decimal;
+  }
+
+  .rich li + li {
+    margin-top: 0.35rem;
+  }
+
+  .rich h2,
+  .rich h3,
+  .rich h4 {
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 1.5rem;
+  }
+
+  .rich h2 {
+    font-size: 1.5rem;
+  }
+
+  .rich h3 {
+    font-size: 1.25rem;
+  }
+
+  .rich h4 {
+    font-size: 1.1rem;
+  }
+
+  .rich blockquote {
+    border-left: 2px solid var(--color-gold);
+    padding-left: 1rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-navy);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Offset for the fixed navbar when jumping to a section. */
+    scroll-padding-top: 4.5rem;
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif text-navy;
+  }
+
+  /* Navy rings on light surfaces (gold would be only ~2.3:1 on white); gold on navy surfaces. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-navy;
+  }
+
+  [data-surface='dark'] :focus-visible,
+  [data-surface='dark']:focus-visible {
+    @apply outline-gold;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
