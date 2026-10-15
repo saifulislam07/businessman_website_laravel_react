@@ -9,3 +9,6 @@ Thumbs.db
 .env.*
 !.env.example
 !deploy/*.example
+
+# Local AI prompt notes
+AI প্রম্পট.md
