@@ -42,6 +42,8 @@ export interface Settings {
   contact_subtitle?: string
   hero_image: ImageUrls | null
   og_image: ImageUrls | null
+  logo: ImageUrls | null
+  logo_light: ImageUrls | null
 }
 
 export interface About {

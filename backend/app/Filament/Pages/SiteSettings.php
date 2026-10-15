@@ -54,7 +54,7 @@ class SiteSettings extends Page implements HasForms
 
     public function getSubheading(): string | Htmlable | null
     {
-        return 'Your name, contact details, section headings and search-engine text. Changes appear on the website straight away.';
+        return 'Your name, logo, contact details, section headings and search-engine text. Changes appear on the website straight away.';
     }
 
     public function mount(): void
@@ -68,6 +68,8 @@ class SiteSettings extends Page implements HasForms
     {
         $hero = $this->imageRow('hero_image');
         $og = $this->imageRow('og_image');
+        $logo = $this->imageRow('logo');
+        $logoLight = $this->imageRow('logo_light');
 
         return $form
             ->statePath('data')
@@ -82,6 +84,14 @@ class SiteSettings extends Page implements HasForms
                                 TextInput::make('name')->label('Your name')->required()->maxLength(255),
                                 TextInput::make('tagline')->label('Tagline')->maxLength(255)
                                     ->helperText('One line shown under your name at the top of the site.'),
+                                ImageUpload::make('logo', Setting::LOGO_COLLECTION, 'Logo (for light backgrounds)')
+                                    ->model($logo)
+                                    ->acceptedFileTypes(['image/png', 'image/webp', 'image/jpeg'])
+                                    ->helperText('Shown in the top bar once you scroll. Use a PNG or WebP with a transparent background and dark text, about 640 px wide. Leave empty to use the default logo.'),
+                                ImageUpload::make('logo_light', Setting::LOGO_LIGHT_COLLECTION, 'Logo (for dark backgrounds)')
+                                    ->model($logoLight)
+                                    ->acceptedFileTypes(['image/png', 'image/webp', 'image/jpeg'])
+                                    ->helperText('Shown over the dark hero, the mobile menu and the footer. Use a PNG or WebP with a transparent background and white text. Leave empty to use the default logo.'),
                                 ImageUpload::make('hero_image', Setting::IMAGE_COLLECTION, 'Hero portrait')
                                     ->model($hero)
                                     ->helperText('Portrait shown beside your name. A tall photo (4:5) works best. JPG, PNG or WebP, up to 5 MB.'),

@@ -2,6 +2,7 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
 import { cn } from '../../lib/cn'
+import { Logo, type LogoSet } from '../Logo'
 import { Button, Container } from '../ui'
 
 export interface NavLink {
@@ -12,9 +13,10 @@ export interface NavLink {
 interface NavbarProps {
   name: string
   links: NavLink[]
+  logos: LogoSet
 }
 
-export function Navbar({ name, links }: NavbarProps) {
+export function Navbar({ name, links, logos }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const firstMobileLink = useRef<HTMLAnchorElement>(null)
@@ -60,11 +62,8 @@ export function Navbar({ name, links }: NavbarProps) {
       )}
     >
       <Container className="flex h-[4.5rem] items-center justify-between">
-        <a
-          href="#top"
-          className={cn('font-serif text-xl font-semibold transition-colors', solid ? 'text-navy' : 'text-white')}
-        >
-          {name}
+        <a href="#top" className="block rounded-lg">
+          <Logo name={name} logos={logos} variant={solid ? 'dark' : 'light'} className="h-12 md:h-14" />
         </a>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
@@ -110,7 +109,7 @@ export function Navbar({ name, links }: NavbarProps) {
           className="fixed inset-0 z-50 flex flex-col bg-navy px-4 py-4 text-white"
         >
           <div className="flex h-[3.5rem] items-center justify-between">
-            <span className="font-serif text-xl font-semibold">{name}</span>
+            <Logo name={name} logos={logos} variant="light" className="h-11" />
             <button type="button" className="rounded-lg p-2" aria-label="Close menu" onClick={() => setOpen(false)}>
               <X aria-hidden="true" />
             </button>

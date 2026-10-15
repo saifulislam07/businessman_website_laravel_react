@@ -115,7 +115,7 @@ export default function App() {
       >
         Skip to content
       </a>
-      <Navbar name={name} links={links} />
+      <Navbar name={name} links={links} logos={{ dark: s.logo, light: s.logo_light }} />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero settings={data.settings} showVentures={data.ventures.length > 0} />
         {/* Alternate white and cream down the page, whichever sections are visible. */}

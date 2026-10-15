@@ -81,6 +81,23 @@ it('saves site settings and the hero image', function () {
         ->and($response->json('data.hero_image.thumb'))->toContain('-thumb.webp');
 });
 
+it('saves the two logos and serves them from the settings API', function () {
+    Storage::fake('public');
+    config(['media-library.disk_name' => 'public']);
+
+    livewire(SiteSettings::class)
+        ->fillForm(['name' => 'Your Name'])
+        ->set('data.logo', [UploadedFile::fake()->image('logo.png', 640, 256)])
+        ->set('data.logo_light', [UploadedFile::fake()->image('logo-light.png', 640, 256)])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    $data = $this->getJson('/api/v1/settings')->assertOk()->json('data');
+
+    expect($data['logo']['medium'])->toContain('-medium.webp')
+        ->and($data['logo_light']['medium'])->toContain('-medium.webp');
+});
+
 it('marks a message as read when opened and lists unread count as badge', function () {
     $message = ContactMessage::create(['name' => 'Jane', 'email' => 'jane@example.com', 'message' => 'Hi']);
 

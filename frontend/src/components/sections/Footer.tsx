@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { Settings } from '../../types'
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../BrandIcons'
+import { Logo } from '../Logo'
 import { Container } from '../ui'
 import type { NavLink } from './Navbar'
 
@@ -24,7 +25,7 @@ export function Footer({ settings, links }: FooterProps) {
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_auto]">
           <div>
-            <p className="font-serif text-2xl font-semibold text-white">{name}</p>
+            <Logo name={name} logos={{ dark: settings.logo, light: settings.logo_light }} variant="light" className="h-16" />
             <p className="mt-3 max-w-sm text-sm">Entrepreneur and businessman based in Brunei and Malaysia.</p>
           </div>
 
