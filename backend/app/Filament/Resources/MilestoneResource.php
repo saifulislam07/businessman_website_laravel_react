@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MilestoneResource\Pages;
+use App\Filament\Support\ImageUpload;
 use App\Models\Milestone;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -32,6 +33,7 @@ class MilestoneResource extends Resource
             TextInput::make('year')->required()->maxLength(20)->helperText('A year or a range, e.g. 2010 or 2010 - 2011.'),
             TextInput::make('title')->required()->maxLength(255),
             RichEditor::make('description')->toolbarButtons(['bold', 'italic', 'strike', 'link', 'h3', 'bulletList', 'orderedList', 'blockquote', 'undo', 'redo'])->disableGrammarly()->columnSpanFull(),
+            ImageUpload::make('image', Milestone::IMAGE_COLLECTION, 'Photo (optional)'),
             Toggle::make('is_active')->label('Show on the website')->default(true),
         ]);
     }

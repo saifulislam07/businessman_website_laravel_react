@@ -15,7 +15,7 @@ function parseStat(value: string) {
   return { prefix: match[1], target: Number(match[2]), suffix: match[3], decimals: match[2].split('.')[1]?.length ?? 0 }
 }
 
-function StatCard({ stat }: { stat: Stat }) {
+function StatCard({ stat, index }: { stat: Stat; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
   const reduceMotion = useReducedMotion()
@@ -33,14 +33,16 @@ function StatCard({ stat }: { stat: Stat }) {
   const display = parsed ? `${parsed.prefix}${shown.toFixed(parsed.decimals)}${parsed.suffix}` : stat.value
 
   return (
-    <Card ref={ref} className="text-center">
-      <DynamicIcon icon={stat.icon} aria-hidden="true" className="mx-auto h-6 w-6 text-gold-dark" />
-      <p className="mt-3 font-serif text-4xl font-semibold text-navy">
-        <span className="sr-only">{stat.value}</span>
-        <span aria-hidden="true">{display}</span>
-      </p>
-      <p className="mt-1 text-sm text-muted">{stat.label}</p>
-    </Card>
+    <Reveal delay={index * 0.1} className="h-full">
+      <Card ref={ref} className="h-full text-center transition-colors duration-300 hover:border-gold">
+        <DynamicIcon icon={stat.icon} aria-hidden="true" className="mx-auto h-6 w-6 text-gold-dark" />
+        <p className="mt-3 font-serif text-4xl font-semibold text-navy">
+          <span className="sr-only">{stat.value}</span>
+          <span aria-hidden="true">{display}</span>
+        </p>
+        <p className="mt-1 text-sm text-muted">{stat.label}</p>
+      </Card>
+    </Reveal>
   )
 }
 
@@ -83,8 +85,8 @@ export function About({ about, stats, name, tone, title, subtitle }: AboutProps)
 
       {stats.length > 0 && (
         <div className={`grid grid-cols-2 gap-4 lg:grid-cols-4 ${about ? 'mt-16' : ''}`}>
-          {stats.map((stat) => (
-            <StatCard key={stat.id} stat={stat} />
+          {stats.map((stat, i) => (
+            <StatCard key={stat.id} stat={stat} index={i} />
           ))}
         </div>
       )}

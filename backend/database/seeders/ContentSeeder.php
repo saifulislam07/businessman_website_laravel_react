@@ -29,7 +29,7 @@ class ContentSeeder extends Seeder
             ['Years of Experience', '15+', 'calendar'],
             ['Ventures Founded', '8', 'building'],
             ['Team Members', '120+', 'users'],
-            ['Countries', '3', 'globe'],
+            ['Countries Visited', '3', 'globe'],
         ];
         foreach ($stats as $i => [$label, $value, $icon]) {
             Stat::create(['label' => $label, 'value' => $value, 'icon' => $icon, 'sort_order' => $i]);

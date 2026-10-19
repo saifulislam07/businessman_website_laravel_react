@@ -11,6 +11,7 @@ use App\Http\Resources\PartnerResource;
 use App\Http\Resources\StatResource;
 use App\Http\Resources\TestimonialResource;
 use App\Http\Resources\VentureResource;
+use App\Http\Resources\VisitedCountryResource;
 use App\Models\About;
 use App\Models\Expertise;
 use App\Models\GalleryItem;
@@ -19,6 +20,7 @@ use App\Models\Partner;
 use App\Models\Stat;
 use App\Models\Testimonial;
 use App\Models\Venture;
+use App\Models\VisitedCountry;
 use App\Services\SettingsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -34,6 +36,7 @@ class HomeController extends Controller
             'settings' => $settings->all(),
             'about' => ($about = About::active()->ordered()->first()) ? AboutResource::make($about)->resolve() : null,
             'stats' => $this->collect(StatResource::class, Stat::active()->ordered()->get()),
+            'countries' => $this->collect(VisitedCountryResource::class, VisitedCountry::active()->ordered()->get()),
             'ventures' => $this->collect(VentureResource::class, Venture::active()->ordered()->get()),
             'expertise' => $this->collect(ExpertiseResource::class, Expertise::active()->ordered()->get()),
             'milestones' => $this->collect(MilestoneResource::class, Milestone::active()->ordered()->get()),

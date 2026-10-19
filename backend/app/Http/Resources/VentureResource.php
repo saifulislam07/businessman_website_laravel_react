@@ -22,6 +22,7 @@ class VentureResource extends JsonResource
             'website_url' => $this->website_url,
             'founded_year' => $this->founded_year,
             'logo' => MediaUrls::image($this->resource, $this->resource::IMAGE_COLLECTION),
+            'cover' => MediaUrls::image($this->resource, $this->resource::COVER_COLLECTION),
         ];
     }
 }

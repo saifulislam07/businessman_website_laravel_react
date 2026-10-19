@@ -70,6 +70,7 @@ export interface Venture {
   website_url: string | null
   founded_year: number | null
   logo: ImageUrls | null
+  cover: ImageUrls | null
 }
 
 export interface Expertise {
@@ -77,6 +78,13 @@ export interface Expertise {
   title: string
   description: string | null
   icon: string | null
+  image: ImageUrls | null
+}
+
+export interface VisitedCountry {
+  id: number
+  code: string
+  name: string
 }
 
 export interface Milestone {
@@ -84,6 +92,7 @@ export interface Milestone {
   year: string
   title: string
   description: string | null
+  image: ImageUrls | null
 }
 
 export interface GalleryItem {
@@ -113,6 +122,7 @@ export interface HomeData {
   settings: Settings
   about: About | null
   stats: Stat[]
+  countries: VisitedCountry[]
   ventures: Venture[]
   expertise: Expertise[]
   milestones: Milestone[]

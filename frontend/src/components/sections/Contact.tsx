@@ -57,14 +57,14 @@ export function Contact({ settings, tone, title, subtitle }: ContactProps) {
           )}
           {settings.email && (
             <InfoCard icon={<Mail aria-hidden="true" className="h-5 w-5" />} title="Email">
-              <a href={`mailto:${settings.email}`} className="underline underline-offset-4 hover:text-navy">
+              <a href={`mailto:${settings.email}`} className="inline-block py-2 underline underline-offset-4 hover:text-navy">
                 {settings.email}
               </a>
             </InfoCard>
           )}
           {settings.phone && (
             <InfoCard icon={<Phone aria-hidden="true" className="h-5 w-5" />} title="Phone">
-              <a href={`tel:${settings.phone.replace(/[^\d+]/g, '')}`} className="underline underline-offset-4 hover:text-navy">
+              <a href={`tel:${settings.phone.replace(/[^\d+]/g, '')}`} className="inline-block py-2 underline underline-offset-4 hover:text-navy">
                 {settings.phone}
               </a>
             </InfoCard>

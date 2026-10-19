@@ -1,8 +1,14 @@
-import type { Settings } from '../../types'
+import type { Settings, VisitedCountry } from '../../types'
 import { ResponsiveImage } from '../ResponsiveImage'
 import { Button, Container } from '../ui'
 
-export function Hero({ settings, showVentures }: { settings: Settings; showVentures: boolean }) {
+interface HeroProps {
+  settings: Settings
+  countries: VisitedCountry[]
+  showVentures: boolean
+}
+
+export function Hero({ settings, countries, showVentures }: HeroProps) {
   const name = settings.name ?? 'Your Name'
 
   return (
@@ -22,6 +28,27 @@ export function Hero({ settings, showVentures }: { settings: Settings; showVentu
               </Button>
             )}
           </div>
+
+          {countries.length > 0 && (
+            <div className="mt-12">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">Countries visited</p>
+              <ul className="mt-4 flex flex-wrap gap-4">
+                {countries.map((country) => (
+                  <li key={country.id}>
+                    <img
+                      src={`/flags/${country.code}.png`}
+                      alt={country.name}
+                      title={country.name}
+                      width={60}
+                      height={40}
+                      loading="lazy"
+                      className="h-8 w-12 rounded border border-white/20 object-cover md:h-10 md:w-15"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {settings.hero_image && (

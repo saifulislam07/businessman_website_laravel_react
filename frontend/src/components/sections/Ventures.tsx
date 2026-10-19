@@ -63,6 +63,16 @@ export function Ventures({ ventures, tone, title, subtitle }: VenturesProps) {
                   {venture.founded_year && ` · Est. ${venture.founded_year}`}
                 </p>
                 {venture.description && <RichText html={venture.description} className="mt-4 max-w-2xl text-sm leading-relaxed" />}
+                {venture.cover && (
+                  <ResponsiveImage
+                    image={venture.cover}
+                    alt=""
+                    sizes="(min-width: 1200px) 640px, (min-width: 768px) 60vw, 100vw"
+                    width={1200}
+                    height={525}
+                    className="mt-6 aspect-[16/7] w-full max-w-2xl rounded-card border border-navy/10 object-cover"
+                  />
+                )}
               </div>
 
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-navy md:pt-2 md:text-right">

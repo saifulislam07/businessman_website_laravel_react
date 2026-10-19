@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Support\MediaUrls;
 use App\Support\RichText;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,6 +17,7 @@ class MilestoneResource extends JsonResource
             'year' => $this->year,
             'title' => $this->title,
             'description' => RichText::html($this->description),
+            'image' => MediaUrls::image($this->resource, $this->resource::IMAGE_COLLECTION),
         ];
     }
 }

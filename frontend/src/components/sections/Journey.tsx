@@ -1,4 +1,5 @@
 import type { Milestone } from '../../types'
+import { ResponsiveImage } from '../ResponsiveImage'
 import { RichText } from '../RichText'
 import { Reveal, Section } from '../ui'
 
@@ -28,6 +29,16 @@ export function Journey({ milestones, tone, title, subtitle }: JourneyProps) {
               <Reveal className="md:pl-10">
                 <h3 className="text-xl font-semibold leading-8">{m.title}</h3>
                 {m.description && <RichText html={m.description} className="mt-1 text-muted" />}
+                {m.image && (
+                  <ResponsiveImage
+                    image={m.image}
+                    alt=""
+                    sizes="(min-width: 768px) 24rem, 100vw"
+                    width={800}
+                    height={450}
+                    className="mt-4 aspect-video w-full max-w-sm rounded-card border border-navy/10 object-cover"
+                  />
+                )}
               </Reveal>
             </li>
           ))}

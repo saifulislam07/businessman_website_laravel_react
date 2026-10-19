@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Models\Stat;
 use App\Models\Testimonial;
 use App\Models\Venture;
+use App\Models\VisitedCountry;
 use App\Observers\ClearHomeCacheObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Stat::class,
         Testimonial::class,
         Venture::class,
+        VisitedCountry::class,
     ];
 
     public function register(): void

@@ -117,7 +117,7 @@ export default function App() {
       </a>
       <Navbar name={name} links={links} logos={{ dark: s.logo, light: s.logo_light }} />
       <main id="main" tabIndex={-1} className="outline-none">
-        <Hero settings={data.settings} showVentures={data.ventures.length > 0} />
+        <Hero settings={data.settings} countries={data.countries} showVentures={data.ventures.length > 0} />
         {/* Alternate white and cream down the page, whichever sections are visible. */}
         {shown.map((section, i) => (
           <div key={section.id}>{section.render(i % 2 === 0 ? 'white' : 'cream')}</div>

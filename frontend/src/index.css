@@ -45,7 +45,7 @@
 
 @theme inline {
   --animate-fade: fade 0.4s ease-out;
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 60s linear infinite;
 }
 
 @layer components {

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { Settings } from '../../types'
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../BrandIcons'
+import { DEVELOPER } from '../../lib/site'
 import { Logo } from '../Logo'
 import { Container } from '../ui'
 import type { NavLink } from './Navbar'
@@ -30,10 +31,10 @@ export function Footer({ settings, links }: FooterProps) {
           </div>
 
           <nav aria-label="Footer">
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            <ul className="grid grid-cols-2 gap-x-6 text-sm">
               {links.map((link) => (
                 <li key={link.id}>
-                  <a href={`#${link.id}`} className="hover:text-white">
+                  <a href={`#${link.id}`} className="inline-block py-2 hover:text-white">
                     {link.label}
                   </a>
                 </li>
@@ -60,9 +61,22 @@ export function Footer({ settings, links }: FooterProps) {
           </ul>
         </div>
 
-        <p className="mt-10 border-t border-white/10 pt-6 text-xs text-white/60">
-          © {YEAR} {name}. All rights reserved.
-        </p>
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {YEAR} {name}. All rights reserved.
+          </p>
+          <p>
+            Developed by{' '}
+            <a
+              href={DEVELOPER.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-white/80 underline decoration-gold underline-offset-4 hover:text-white"
+            >
+              {DEVELOPER.name}
+            </a>
+          </p>
+        </div>
       </Container>
     </footer>
   )

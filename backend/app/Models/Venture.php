@@ -24,8 +24,11 @@ class Venture extends Model implements HasMedia
 
     public const IMAGE_COLLECTION = 'logo';
 
+    public const COVER_COLLECTION = 'cover';
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(self::IMAGE_COLLECTION)->singleFile();
+        $this->addMediaCollection(self::COVER_COLLECTION)->singleFile();
     }
 }

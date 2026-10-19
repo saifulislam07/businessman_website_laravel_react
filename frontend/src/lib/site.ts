@@ -1,6 +1,9 @@
 /** Canonical origin of the public site, used for canonical, Open Graph and structured-data URLs. */
 export const SITE_URL = ((import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://example.com').replace(/\/$/, '')
 
+/** Credit shown in the footer. */
+export const DEVELOPER = { name: 'NG-CODER', url: 'https://ng-coder.com' }
+
 export const DEFAULT_TITLE = 'Your Name — Entrepreneur in Brunei & Malaysia'
 export const DEFAULT_DESCRIPTION =
   'Official website of Your Name, entrepreneur and businessman with ventures across Brunei and Malaysia.'

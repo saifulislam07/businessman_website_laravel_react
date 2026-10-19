@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExpertiseResource\Pages;
+use App\Filament\Support\ImageUpload;
 use App\Models\Expertise;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -38,6 +39,7 @@ class ExpertiseResource extends Resource
             TextInput::make('title')->required()->maxLength(255),
             TextInput::make('icon')->maxLength(255)->helperText('Lucide icon name, e.g. "Briefcase".'),
             RichEditor::make('description')->toolbarButtons(['bold', 'italic', 'strike', 'link', 'h3', 'bulletList', 'orderedList', 'blockquote', 'undo', 'redo'])->disableGrammarly()->columnSpanFull(),
+            ImageUpload::make('image', Expertise::IMAGE_COLLECTION, 'Photo (optional)'),
             Toggle::make('is_active')->label('Show on the website')->default(true),
         ]);
     }

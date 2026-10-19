@@ -16,7 +16,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
           sizes="160px"
           width={160}
           height={64}
-          className="h-12 w-auto max-w-[9rem] object-contain"
+          className="h-12 w-36 object-contain"
         />
       ) : (
         <span className="text-center font-serif text-lg text-navy">{partner.name}</span>
@@ -31,15 +31,15 @@ function PartnerStrip({ partners }: { partners: Partner[] }) {
 
   return (
     <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]">
-      <div className="flex w-max animate-marquee gap-6 hover:[animation-play-state:paused] motion-reduce:animate-none">
-        <ul aria-label="Partners" className="flex shrink-0 gap-6">
+      <div className="flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:animate-none">
+        <ul aria-label="Partners" className="flex shrink-0 gap-6 pr-6">
           {set.map((partner, i) => (
             <li key={i}>
               <PartnerLogo partner={partner} />
             </li>
           ))}
         </ul>
-        <ul aria-hidden="true" className="flex shrink-0 gap-6 motion-reduce:hidden">
+        <ul aria-hidden="true" className="flex shrink-0 gap-6 pr-6 motion-reduce:hidden">
           {set.map((partner, i) => (
             <li key={i}>
               <PartnerLogo partner={partner} />

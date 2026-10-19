@@ -50,6 +50,7 @@ class VentureResource extends Resource
             TextInput::make('founded_year')->label('Founded (year)')->numeric()->minValue(1900)->maxValue((int) date('Y')),
             RichEditor::make('description')->toolbarButtons(['bold', 'italic', 'strike', 'link', 'h3', 'bulletList', 'orderedList', 'blockquote', 'undo', 'redo'])->disableGrammarly()->columnSpanFull(),
             ImageUpload::make('logo', Venture::IMAGE_COLLECTION, 'Logo'),
+            ImageUpload::make('cover', Venture::COVER_COLLECTION, 'Cover photo (wide, optional)'),
             Toggle::make('is_active')->label('Show on the website')->default(true),
         ]);
     }
